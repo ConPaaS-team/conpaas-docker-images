@@ -18,7 +18,7 @@ RUN bash mkdist.sh 1.5.0 && \
     rm -rf *.tar.gz && \
     cp -r cpsfrontend-*/www/* /var/www/html/ && \
     rm -f /var/www/html/index.html && \
-    cp /var/www/config-example.php /var/www/config.php && \
+    cp /var/www/html/config-example.php /var/www/html/config.php && \
     a2enmod ssl && \
     a2ensite default-ssl && \
     cd cpsdirector-* && \
