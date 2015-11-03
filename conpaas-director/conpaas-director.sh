@@ -18,11 +18,32 @@ rm -f ${TMPFILE}
 
 export HOME="/root/"
 
-: ${USERNAME:="test"}
-: ${PASSWORD:="password"}
-: ${EMAIL:="test@email"}
+export DRIVER=openstack 
+          export USER=conpaas
+          export PASSWORD={{ openstack_identity_conpaas_password }}
+          export SECGROUP=conpaas-secgroup
+          export KEYNAME=conpaas-keypair 
+          export SIZE_ID=m1.small
+          export CPS_USERNAME=test
+          export CPS_PASSWORD=password
+
+
+: ${HOME:="/root"}
+
 : ${DRIVER:="openstack"}
+: ${HOST:=""}
+: ${USER:="conpaas"}
+: ${PASSWORD:=""}
+: ${SECGROUP:="conpaas-secgroup"}
+: ${KEYNAME:="conpaas-keypair"}
+: ${SIZE_ID:="m1.small"}
 : ${IMAGE_ID:=""}
+
+: ${CPS_USERNAME:="test"}
+: ${CPS_PASSWORD:="password"}
+: ${EMAIL:="test@email"}
+
+
 : ${IP_ADDRESS:="$(ip addr show | perl -ne 'print "$1\n" if /inet ([\d.]+).*scope global/' | grep "$IP_PREFIX" | head -1)"}
 : ${DIRECTOR_URL:="https://${IP_ADDRESS}:5555"}
 #: ${CRS_URL:="http://${IP_ADDRESS}:56789"}
@@ -32,8 +53,8 @@ sed -i "/^const DIRECTOR_URL =/s%=.*$%= '${DIRECTOR_URL}';%" /var/www/config.php
 sed -i "/^DIRECTOR_URL =/s%=.*$%= ${DIRECTOR_URL}%" /etc/cpsdirector/director.cfg
 
 sed -i "s|^\(# director_url\s*=\s*\).*$|director_url = ${DIRECTOR_URL}|" /root/.conpaas/cps-tools.conf
-sed -i "s|^\(# username\s*=\s*\).*$|username = ${USERNAME}|" /root/.conpaas/cps-tools.conf
-sed -i "s|^\(# password\s*=\s*\).*$|password = ${PASSWORD}|" /root/.conpaas/cps-tools.conf
+sed -i "s|^\(# username\s*=\s*\).*$|username = ${CPS_USERNAME}|" /root/.conpaas/cps-tools.conf
+sed -i "s|^\(# password\s*=\s*\).*$|password = ${CPS_PASSWORD}|" /root/.conpaas/cps-tools.conf
 
 cd ..
 rm -rf cps-tools*
@@ -41,8 +62,12 @@ rm -rf cps-tools*
 
 
 
-sed -i -e'/^\[iaas\]/,/^\[.*\]/{/^DRIVER\s*=.*/d}' -e'/^\[iaas\]/aDRIVER = ${DRIVER}' /etc/cpsdirector/director.cfg
-# sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^HOST\s*=.*/d}" -e"/^\[iaas\]/aHOST = ${CRS_URL}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^DRIVER\s*=.*/d}" -e"/^\[iaas\]/aDRIVER = ${DRIVER}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^HOST\s*=.*/d}" -e"/^\[iaas\]/aHOST = ${HOST}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^HOST\s*=.*/d}" -e"/^\[iaas\]/aUSER = ${USER}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^HOST\s*=.*/d}" -e"/^\[iaas\]/aPASSWORD = ${PASSWORD}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^HOST\s*=.*/d}" -e"/^\[iaas\]/aSECGROUP = ${SECGROUP}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^HOST\s*=.*/d}" -e"/^\[iaas\]/aSIZE_ID = ${SIZE_ID}" /etc/cpsdirector/director.cfg
 sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^IMAGE_ID\s*=.*/d}" -e"/^\[iaas\]/aIMAGE_ID = ${IMAGE_ID}" /etc/cpsdirector/director.cfg
 
 echo "ServerName ${IP_ADDRESS}" > /etc/apache2/conf-available/servername.conf
@@ -52,6 +77,6 @@ echo ${IP_ADDRESS} | cpsconf.py
 # export PYTHON_EGG_CACHE="/tmp/director-eggcache"
 service apache2 start
 
-cpsadduser.py ${EMAIL} ${USERNAME} ${PASSWORD}
+cpsadduser.py ${EMAIL} ${CPS_USERNAME} ${CPS_PASSWORD}
 cps-user get_certificate
-# cpsclient.py credentials ${DIRECTOR_URL} ${USERNAME} ${PASSWORD}
+# cpsclient.py credentials ${DIRECTOR_URL} ${CPS_USERNAME} ${CPS_PASSWORD}
