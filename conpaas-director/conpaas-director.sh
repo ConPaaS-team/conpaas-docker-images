@@ -16,20 +16,7 @@ fi
 rm -f ${TMPFILE}
 
 
-export HOME="/root/"
-
-export DRIVER=openstack 
-          export USER=conpaas
-          export PASSWORD={{ openstack_identity_conpaas_password }}
-          export SECGROUP=conpaas-secgroup
-          export KEYNAME=conpaas-keypair 
-          export SIZE_ID=m1.small
-          export CPS_USERNAME=test
-          export CPS_PASSWORD=password
-
-
 : ${HOME:="/root"}
-
 : ${DRIVER:="openstack"}
 : ${HOST:=""}
 : ${USER:="conpaas"}
