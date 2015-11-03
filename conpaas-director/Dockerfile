@@ -16,7 +16,7 @@ RUN bash mkdist.sh 1.5.0 && \
     easy_install --always-unzip cpslib-*.tar.gz && \
     #easy_install --always-unzip cpsclient-*.tar.gz && \
     rm -rf *.tar.gz && \
-    cp -r cpsfrontend-*/www/* /var/www/html && \
+    cp -r cpsfrontend-*/www/* /var/www/html/ && \
     rm -f /var/www/html/index.html && \
     cp /var/www/config-example.php /var/www/config.php && \
     a2enmod ssl && \
