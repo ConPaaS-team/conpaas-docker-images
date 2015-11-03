@@ -3,7 +3,7 @@ MAINTAINER Genc Tato <genc.tato@inria.fr>
 
 # prepare working directory
 RUN mkdir -p /var/cache/docker/workdirs && \
-    git clone -b dev https://github.com/ConPaaS-team/conpaas.git \
+    git clone -b devam https://github.com/ConPaaS-team/conpaas.git \
         /var/cache/docker/workdirs/conpaas
 WORKDIR /var/cache/docker/workdirs/conpaas
 
@@ -16,8 +16,8 @@ RUN bash mkdist.sh 1.5.0 && \
     easy_install --always-unzip cpslib-*.tar.gz && \
     #easy_install --always-unzip cpsclient-*.tar.gz && \
     rm -rf *.tar.gz && \
-    cp -r cpsfrontend-*/www/* /var/www && \
-    rm -f /var/www/index.html && \
+    cp -r cpsfrontend-*/www/* /var/www/html && \
+    rm -f /var/www/html/index.html && \
     cp /var/www/config-example.php /var/www/config.php && \
     a2enmod ssl && \
     a2ensite default-ssl && \
