@@ -51,10 +51,11 @@ rm -rf cps-tools*
 
 sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^DRIVER\s*=.*/d}" -e"/^\[iaas\]/aDRIVER = ${DRIVER}" /etc/cpsdirector/director.cfg
 sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^HOST\s*=.*/d}" -e"/^\[iaas\]/aHOST = ${HOST}" /etc/cpsdirector/director.cfg
-sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^HOST\s*=.*/d}" -e"/^\[iaas\]/aUSER = ${USER}" /etc/cpsdirector/director.cfg
-sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^HOST\s*=.*/d}" -e"/^\[iaas\]/aPASSWORD = ${PASSWORD}" /etc/cpsdirector/director.cfg
-sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^HOST\s*=.*/d}" -e"/^\[iaas\]/aSECGROUP = ${SECGROUP}" /etc/cpsdirector/director.cfg
-sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^HOST\s*=.*/d}" -e"/^\[iaas\]/aSIZE_ID = ${SIZE_ID}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^USER\s*=.*/d}" -e"/^\[iaas\]/aUSER = ${USER}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^PASSWORD\s*=.*/d}" -e"/^\[iaas\]/aPASSWORD = ${PASSWORD}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^SECURITY_GROUP_NAME\s*=.*/d}" -e"/^\[iaas\]/aSECURITY_GROUP_NAME = ${SECGROUP}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^KEY_NAME\s*=.*/d}" -e"/^\[iaas\]/aKEY_NAME = ${KEYNAME}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^SIZE_ID\s*=.*/d}" -e"/^\[iaas\]/aSIZE_ID = ${SIZE_ID}" /etc/cpsdirector/director.cfg
 sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^IMAGE_ID\s*=.*/d}" -e"/^\[iaas\]/aIMAGE_ID = ${IMAGE_ID}" /etc/cpsdirector/director.cfg
 
 echo "ServerName ${IP_ADDRESS}" > /etc/apache2/conf-available/servername.conf
