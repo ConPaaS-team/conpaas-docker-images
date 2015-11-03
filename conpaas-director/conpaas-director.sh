@@ -15,7 +15,9 @@ if [ -e "${TMPFILE}" ]; then
 fi
 rm -f ${TMPFILE}
 
-: ${HOME:="/root/"}
+
+export HOME="/root/"
+
 : ${USERNAME:="test"}
 : ${PASSWORD:="password"}
 : ${EMAIL:="test@email"}
