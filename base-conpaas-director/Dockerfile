@@ -29,6 +29,7 @@ RUN apt-get update && \
         python-setuptools \
         python-simplejson \
         python-sklearn \
+        python-cheetah \
         vim \
         sqlite3 && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*

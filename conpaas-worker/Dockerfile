@@ -64,8 +64,9 @@ RUN apt-get update && \
 #    easy_install patsy && \
 #    easy_install statsmodels
 
-#RUN curl -s https://bootstrap.pypa.io/get-pip.py | python -
-#RUN pip install git+https://github.com/harnesscloud/remyroy-pyopenssl-shutdown-fix#egg=pyopenssl
+#I will never understand why they don't fix this bug
+RUN curl -s https://bootstrap.pypa.io/get-pip.py | python -
+RUN pip install git+https://github.com/harnesscloud/remyroy-pyopenssl-shutdown-fix#egg=pyopenssl
 
 # create directory structure
 RUN mkdir -p \

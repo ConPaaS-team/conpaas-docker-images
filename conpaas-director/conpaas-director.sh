@@ -25,6 +25,9 @@ rm -f ${TMPFILE}
 : ${KEYNAME:="conpaas-keypair"}
 : ${SIZE_ID:="m1.small"}
 : ${IMAGE_ID:=""}
+: ${NETWORK_ID:="conpaas-net"}
+: ${AUTO_ASSIGN_FLOATING_IP:="false"}
+
 
 : ${CPS_USERNAME:="test"}
 : ${CPS_PASSWORD:="password"}
@@ -36,7 +39,8 @@ rm -f ${TMPFILE}
 #: ${CRS_URL:="http://${IP_ADDRESS}:56789"}
 
 sed -i "/^logfile\s*=/s%=.*$%= /var/log/apache2/cpsfrontend-error.log%" /etc/cpsdirector/main.ini
-sed -i "/^const DIRECTOR_URL =/s%=.*$%= '${DIRECTOR_URL}';%" /var/www/config.php
+sed -i "/^const DIRECTOR_URL =/s%=.*$%= '${DIRECTOR_URL}';%" /var/www/html/config.php
+sed -i "/^const DEBUG =/s%=.*$%= true;%" /var/www/html/config.php
 sed -i "/^DIRECTOR_URL =/s%=.*$%= ${DIRECTOR_URL}%" /etc/cpsdirector/director.cfg
 
 sed -i "s|^\(# director_url\s*=\s*\).*$|director_url = ${DIRECTOR_URL}|" /root/.conpaas/cps-tools.conf
@@ -57,6 +61,8 @@ sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^SECURITY_GROUP_NAME\s*=.*/d}" -e"/^\[iaas\]/aS
 sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^KEY_NAME\s*=.*/d}" -e"/^\[iaas\]/aKEY_NAME = ${KEYNAME}" /etc/cpsdirector/director.cfg
 sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^SIZE_ID\s*=.*/d}" -e"/^\[iaas\]/aSIZE_ID = ${SIZE_ID}" /etc/cpsdirector/director.cfg
 sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^IMAGE_ID\s*=.*/d}" -e"/^\[iaas\]/aIMAGE_ID = ${IMAGE_ID}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^NETWORK_ID\s*=.*/d}" -e"/^\[iaas\]/aNETWORK_ID = ${NETWORK_ID}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^AUTO_ASSIGN_FLOATING_IP\s*=.*/d}" -e"/^\[iaas\]/AUTO_ASSIGN_FLOATING_IP = ${AUTO_ASSIGN_FLOATING_IP}" /etc/cpsdirector/director.cfg
 
 echo "ServerName ${IP_ADDRESS}" > /etc/apache2/conf-available/servername.conf
 a2enconf servername
