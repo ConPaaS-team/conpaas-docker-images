@@ -62,7 +62,7 @@ sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^KEY_NAME\s*=.*/d}" -e"/^\[iaas\]/aKEY_NAME = $
 sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^SIZE_ID\s*=.*/d}" -e"/^\[iaas\]/aSIZE_ID = ${SIZE_ID}" /etc/cpsdirector/director.cfg
 sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^IMAGE_ID\s*=.*/d}" -e"/^\[iaas\]/aIMAGE_ID = ${IMAGE_ID}" /etc/cpsdirector/director.cfg
 sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^NETWORK_ID\s*=.*/d}" -e"/^\[iaas\]/aNETWORK_ID = ${NETWORK_ID}" /etc/cpsdirector/director.cfg
-sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^AUTO_ASSIGN_FLOATING_IP\s*=.*/d}" -e"/^\[iaas\]/AUTO_ASSIGN_FLOATING_IP = ${AUTO_ASSIGN_FLOATING_IP}" /etc/cpsdirector/director.cfg
+sed -i -e"/^\[iaas\]/,/^\[.*\]/{/^AUTO_ASSIGN_FLOATING_IP\s*=.*/d}" -e"/^\[iaas\]/aAUTO_ASSIGN_FLOATING_IP = ${AUTO_ASSIGN_FLOATING_IP}" /etc/cpsdirector/director.cfg
 
 echo "ServerName ${IP_ADDRESS}" > /etc/apache2/conf-available/servername.conf
 a2enconf servername
